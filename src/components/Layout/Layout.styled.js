@@ -13,8 +13,8 @@ export const Container = styled.div`
   &:before {
     content: '';
     background-image: linear-gradient(
-        rgba(106, 191, 235, 0),
-        rgba(106, 191, 235, 1)
+        rgba(36, 196, 54, 0),
+        rgba(36, 196, 54, 1)
       ),
       url(${background});
     background-blend-mode: multiply;
@@ -49,7 +49,7 @@ export const Header = styled.header`
 export const Logo = styled.p`
   font-weight: 700;
   font-size: 30px;
-  color: #6e8101;
+  color:#0ba025;
   margin: 0;
   margin-left: 10px;
 `;
@@ -63,7 +63,7 @@ export const Links = styled(NavLink)`
 
   &.active {
     color: white;
-    background-color: #6e8101;
+    background-color: #0ba025;
   }
 `;
 

@@ -12,6 +12,8 @@ import {
 import noimage from 'components/images/noimageavailable.jpg';
 import Button from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
+import Cast from 'components/Cast/Cast';
+import Reviews from 'components/Reviews/Reviews';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -105,7 +107,9 @@ const MovieDetails = () => {
         <Button text="Reviews" />
       </Link>
       <hr />
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback= {<Loader/>}>
+        {<Reviews/>}
+        {<Cast />}
         <Outlet />
       </Suspense>
     </div>
