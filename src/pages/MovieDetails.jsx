@@ -107,7 +107,7 @@ const MovieDetails = () => {
         <Button text="Reviews" />
       </Link>
       <hr />
-      <Suspense fallback= {<Loader/>}>
+      <Suspense>
         {<Reviews/>}
         {<Cast />}
         <Outlet />
