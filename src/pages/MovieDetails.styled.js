@@ -1,78 +1,90 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import propTypes from 'prop-types';
 
-import background from '../components/images/wallpapermovie.jpg';
+export const LinkLi = styled(Link)`
+  border: 1px solid #cbf9ff;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 8px;
+  color: #cbf9ff;
+  display: inline-block;
+  margin-top: 20px;
+  &:hover {
+    background-color: rgba(203, 249, 255, 0.1);
+  }
+`;
 
-export const Container = styled.div`
+export const ItemCast = styled.li`
   display: flex;
-  flex-direction: row-reverse;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 20px;
-
-  &::before {
-    content: '';
-    display: block;
-    background-color: rgb(255 255 255);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-  }
-
-  &::after {
-    content: '';
-    position: fixed;
-    top: 0px;
-    left: -5px;
-    width: calc(100% + 10px);
-    height: calc(100vh + 10px);
-    background-image: ${props =>
-      props.backdrop
-        ? `url('https://image.tmdb.org/t/p/w500/${props.backdrop}')`
-        : `url(${background})`};
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    filter: blur(5px);
-    z-index: -1;
-    opacity: 0.35;
-  }
-
-  @media screen and (max-width: 768px) {
-    padding: 0 5px;
-  }
+  gap: 20px;
+  margin-top: 40px;
+  width: 900px;
+  padding-left: 100px;
 `;
 
-export const ImageContainer = styled.div`
-  flex: 0 0 auto;
-  margin-right: 30px;
+export const Poster = styled.img`
+  height: 500px;
+  width: 350px;
+  border-radius: 10px;
 `;
 
-export const Image = styled.img`
-  max-height: 500px;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px;
-  align-self: flex-start;
-`;
-
-export const Description = styled.div`
-  flex: 1 1 auto;
-`;
-
-export const ProdCompany = styled.div`
+export const BoxInfo = styled.div`
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  margin-top: 10px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
 `;
 
-Container.propTypes = {
-  backdrop: propTypes.string,
-};
+export const Title = styled.h3`
+  font-family: system-ui;
+  font-weight: 400;
+  font-size: 35px;
+  color: #cbf9ff;
+`;
+
+export const SpanTitle = styled.span`
+  color: #f44336;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+`;
+
+export const BoldText = styled.h3`
+  font-family: system-ui;
+  font-weight: 700;
+  color: #cbf9ff;
+`;
+
+export const Text = styled.h3`
+  font-family: system-ui;
+  font-weight: 400;
+  color: #cbf9ff;
+`;
+
+export const GenresList = styled.ul`
+  font-family: system-ui;
+  font-weight: 400;
+  color: #cbf9ff;
+  display: flex;
+  gap: 10px;
+  font-size: 18px;
+`;
+
+export const CastList = styled.ul`
+  font-family: system-ui;
+  font-weight: 400;
+  color: #cbf9ff;
+  display: flex;
+  gap: 10px;
+  font-size: 18px;
+  margin-left: 200px;
+`;
+
+export const LinkCast = styled(Link)`
+  border: 1px solid #cbf9ff;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 8px;
+  color: #cbf9ff;
+  display: inline-block;
+  margin-top: 20px;
+`;

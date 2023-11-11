@@ -1,41 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css';
+import { useState, useEffect } from 'react';
 
-import MovieList from '../components/MovieList/MovieList';
-import { fetchTrendingMovies } from '../services/Api';
+import { getMoviesApi } from '../services/Api';
+
+import MoviesList from '../components/MovieList/MovieList';
+import Loader from '../components/Loader/Loader';
 
 const Home = () => {
-  const [trendingMovies, setTrendingMovies] = useState([]);
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-   
-    const fetchData = async () => {
+    const fetchMovies = async () => {
       try {
-        const movies = await fetchTrendingMovies(); // Call the fetchTrendingMovies function
-        setTrendingMovies(movies); // Update the trendingMovies state with the fetched movies
+        const data = await getMoviesApi();
+        setMovies(data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
 
-    fetchData(); // Call the fetchData function to fetch the trending movies
+    fetchMovies();
   }, []);
 
   return (
-    <div>
-      <h2>Trending Movies</h2>
-      <SkeletonTheme baseColor="#dddddd" highlightColor="#a5a5a5">
-        {trendingMovies.length === 0 ? (
-          <Skeleton
-            count={15}
-            style={{ height: 30, width: 300, marginTop: 15 }}
-          />
-        ) : (
-          <MovieList films={trendingMovies} />
-        )}
-      </SkeletonTheme>
-    </div>
+    <>{movies.length === 0 ? <Loader /> : <MoviesList movies={movies} />}</>
   );
 };
 

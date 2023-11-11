@@ -1,35 +1,27 @@
 import { useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
-import { List, Item, LinkDetails, LogoIcon } from '../MovieList/MovieList.styled';
+import { Img, LinkLi, List, Name } from './MovieList.styled';
 
-const MovieList = ({ films }) => {
-  const location = useLocation();
+const MoviesList = ({ movies }) => {
+	const location = useLocation();
+	
+return (
+  <List>
+    {movies?.map(movie => (
+      <LinkLi
+        key={movie.id}
+        to={`/movies/${movie.id}`}
+        state={{ from: location }}
+      >
+        <Img
+          src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+          alt={movie.name}
+        />
+        <Name>{movie.title ? movie.title : movie.name}</Name>
+      </LinkLi>
+    ))}
+  </List>
+);
+}
 
-  return (
-    <List>
-      {films.map(movie => (
-        <Item key={movie.id}>
-          <LinkDetails
-            to={`/movies/${movie.id}`}
-            state={{ from: location }}
-            cover={movie.poster_path}
-          >
-            <LogoIcon /> {movie.title}
-          </LinkDetails>
-        </Item>
-      ))}
-    </List>
-  );
-};
-
-MovieList.propTypes = {
-  films: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      id: PropTypes.number.isRequired,
-    })
-  ),
-};
-
-export default MovieList;
+export default MoviesList;

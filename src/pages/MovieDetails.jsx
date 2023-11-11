@@ -1,119 +1,86 @@
-import React, { useEffect, useState, useRef, Suspense } from 'react';
-import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 
-import { fetchMovieDetails } from '../services/Api';
+import { getMovieDetails } from '../services/Api';
+
 import {
-  Container,
-  Description,
-  ImageContainer,
-  Image,
-  ProdCompany,
+  BoldText,
+  BoxInfo,
+  ItemCast,
+  Poster,
+  SpanTitle,
+  Text,
+  Title,
+  GenresList,
+  LinkLi,
+  LinkCast,
+  CastList,
 } from './MovieDetails.styled';
-import noimage from 'components/images/noimageavailable.jpg';
-import Button from 'components/Button/Button';
-import { Loader } from 'components/Loader/Loader';
-import Cast from 'components/Cast/Cast';
-import Reviews from 'components/Reviews/Reviews';
+import Loader from '../components/Loader/Loader';
 
-const MovieDetails = () => {
-  const { movieId } = useParams();
-  const [movieDetails, setMovieDetails] = useState(null);
+const MoviesDetails = () => {
+  const { id } = useParams();
+  const [movie, setMovie] = useState(null);
   const location = useLocation();
-  const backLinkHref = useRef(location.state?.from || '/');
+  const backLink = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
-    // Отримання деталів фільму з API
-    const movieDetails = async () => {
+    const fetchMovieDetails = async () => {
       try {
-        const movie = await fetchMovieDetails(movieId);
-        setMovieDetails(movie);
+        const data = await getMovieDetails(id);
+        setMovie(data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
 
-    movieDetails();
-  }, [movieId]);
+    fetchMovieDetails();
+  }, [id]);
 
-  if (!movieDetails) {
+  if (!movie) {
     return <Loader />;
   }
 
-  const productionCompaniesList = movieDetails.production_companies?.map(
-    ({ id, logo_path, name }) =>
-      logo_path && (
-        <li key={id}>
-          {logo_path && (
-            <img
-              src={`https://image.tmdb.org/t/p/w500${logo_path}`}
-              alt={name}
-              style={{
-                maxHeight: 50,
-                maxWidth: 200,
-                marginRight: 30,
-                marginTop: 10,
-              }}
-            />
-          )}
-        </li>
-      )
-  );
-
-  // Calculate rounded popularity percentage
-  const roundedPopularity = Math.round(movieDetails.vote_average * 10);
-
   return (
-    <div>
-      <Link to={backLinkHref.current}>
-        <Button text="⬅️ Go back" />
-      </Link>
-      <Container backdrop={movieDetails.backdrop_path}>
-        <Description>
-          <h1>{movieDetails.title}</h1>
-          <h4>User score: {roundedPopularity}%</h4>
-          <h2>Overview</h2>
-          <p>{movieDetails.overview}</p>
-          <h2>Genres</h2>
-          <p>
-            {movieDetails.genres.map(genre => (
-              <span key={genre.id}> {genre.name}</span>
+    <>
+      <LinkLi to={backLink.current}>Go back</LinkLi>
+      <ItemCast>
+        <Poster
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.title}
+        />
+        <BoxInfo>
+          <Title>
+            {movie.title}&nbsp;
+            <SpanTitle>({movie.release_date.substring(0, 4)})</SpanTitle>
+          </Title>
+          <BoldText>Overview: </BoldText>
+          <Text>{movie.overview}</Text>
+          <BoldText>Rate: {movie.vote_average}</BoldText>
+          <BoldText>Popularity: {movie.popularity.toFixed(0)}%</BoldText>
+          <GenresList>
+            <p>Genres :</p>
+            {movie.genres?.map(genre => (
+              <li key={genre.id}>
+                <p>{genre.name}</p>
+              </li>
             ))}
-          </p>
-          {productionCompaniesList[0] !== null &&
-            productionCompaniesList.length > 0 && (
-              <>
-                <h2>Production companies</h2>
-                <ProdCompany>{productionCompaniesList}</ProdCompany>
-              </>
-            )}
-        </Description>
-        <ImageContainer>
-          <Image
-            src={
-              movieDetails.poster_path
-                ? `https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`
-                : `${noimage}`
-            }
-            alt={movieDetails.title}
-          />
-        </ImageContainer>
-      </Container>
-      <hr />
-      <h3>Additional information</h3>
-      <Link to="cast">
-        <Button text="Cast" />
-      </Link>
-      <Link to="reviews">
-        <Button text="Reviews" />
-      </Link>
-      <hr />
-      <Suspense>
-        {<Reviews/>}
-        {<Cast />}
+          </GenresList>
+        </BoxInfo>
+      </ItemCast>
+      <CastList>
+        <li>
+          <LinkCast to="cast">Cast</LinkCast>
+        </li>
+        <li>
+          <LinkCast to="reviews">Reviews</LinkCast>
+        </li>
+      </CastList>
+      <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
-    </div>
+    </>
   );
 };
 
-export default MovieDetails;
+export default MoviesDetails;

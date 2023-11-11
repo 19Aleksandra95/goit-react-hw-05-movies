@@ -1,55 +1,43 @@
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import React, {useEffect, useState} from 'react';
-import { useParams} from 'react-router-dom';
+import { getMovieCast } from 'services/Api';
 
-import { fetchMovieCast } from 'services/Api';
-import { List, Item } from './Cast.styled';
-import noImage from '../images/noimageavailable.jpg'
+import { Persone, List, Images, CastName } from './Cast.styled';
 
 const Cast = () => {
-    const {movieId} = useParams();
-    const [cast, setCast] = useState([]);
+  const { id } = useParams();
+  const [cast, setCast] = useState(null);
 
-useEffect(() => {
-    //Otrzymanie informacji aktywnego filmu z API
-
-    const movieCast = async () =>{
-        try {
-            const response = await fetchMovieCast(movieId);
-            setCast(response)
-        } catch (error) {
-            console.log(error);
-        } 
+  useEffect(() => {
+    const fetchMovieCast = async () => {
+      try {
+        const data = await getMovieCast(id);
+        setCast(data.cast);
+      } catch (error) {
+        console.log(error);
+      }
     };
-    movieCast();
-}, [movieId]);
 
-return (
-    <>
-      {cast.length !== 0 && (
-        <div>
-          <h2>Movie Cast</h2>
-          <List>
-            {cast.map(actor => (
-              <Item key={actor.id}>
-                <img
-                  width="200px"
-                  height="300px"
-                  src={
-                    actor.profile_path
-                      ? `https://image.tmdb.org/t/p/w300${actor.profile_path}`
-                      : `${noImage}`
-                  }
-                  alt={actor.original_name}
-                />
-                <p>{actor.name}</p>
-              </Item>
-            ))}
-          </List>
-        </div>
-      )}
-      {cast.length === 0 && <div>We don't have any cast for this movie.</div>}
-    </>
+    fetchMovieCast();
+  }, [id]);
+
+  return (
+    <List>
+      {cast?.map(item => (
+        <Persone key={item.id}>
+          <Images
+            src={
+              item.profile_path !== null
+                ? `https://image.tmdb.org/t/p/w500${item.profile_path}`
+                : 'http://placehold.it/100x150'
+            }
+            alt={item.name}
+          />
+          <CastName>{item.name}</CastName>
+        </Persone>
+      ))}
+    </List>
   );
 };
 

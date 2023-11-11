@@ -1,29 +1,27 @@
-import {DebounceInput} from 'react-debounce-input';
-import propTypes from 'prop-types';
+import { useState } from 'react';
 
-import { Form, Icon } from './SearchForm.styled';
+import { Form, Button, Input } from './SearchForm.styled';
 
-export const SearchForm = ({ value, onChange }) => {
+const SearchForm = ({ onSearchMovies }) => {
+  const [search, setSearch] = useState('');
+
+  const handleChange = ({ target: { value } }) => {
+    setSearch(value);
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
+    onSearchMovies(search);
   };
+
+
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h2>Movie Search</h2>
-      <DebounceInput
-        type="text"
-        debounceTimeout={500}
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        placeholder="type here"
-      />
-      <Icon />
+      <Input type="text" name="film" value={search} onChange={handleChange} />
+      <Button type="submit">Search</Button>
     </Form>
   );
 };
 
-SearchForm.propTypes = {
-  value: propTypes.string,
-  onChange: propTypes.func,
-};
+export default SearchForm;

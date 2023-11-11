@@ -1,14 +1,24 @@
 import styled from 'styled-components';
 
 export const List = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  gap: 50px 30px;
 `;
 
-export const Item = styled.li`
-  margin-top: 20px;
-  img {
-    border-radius: 5px;
-  }
+export const Persone = styled.li`
+  width: 100px;
+  height: 150px;
+`;
+
+export const Images = styled.img`
+  border-radius: 8px;
+  margin-bottom: 2px;
+`;
+
+export const CastName = styled.p`
+  color: #cbf9ff;
+  text-align: center;
 `;

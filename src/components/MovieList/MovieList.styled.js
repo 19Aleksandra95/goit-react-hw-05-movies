@@ -1,67 +1,38 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import propTypes from 'prop-types';
-import { FaFilm } from 'react-icons/fa';
-
-import placeholder from '../images/noimageavailable.jpg';
+import { Link } from 'react-router-dom';
 
 export const List = styled.ul`
-  list-style: none;
-  font-size: 1.1rem;
-  font-weight: 500;
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
 `;
 
-export const Item = styled.li`
-  padding: 5px 12px;
-  border-bottom: 1px solid transparent;
-  position: relative;
-`;
-
-export const LinkDetails = styled(Link)`
-  color: #000;
+export const LinkLi = styled(Link)`
+  width: 250px;
+  height: auto;
   text-decoration: none;
-  margin: 1px;
-
-  &:hover,
-  &:focus {
-    color: #064e8a;
-  }
-
-  @media screen and (min-width: 768px) {
-    &:hover::after,
-    &:focus::after {
-      content: '';
-      background-image: ${props =>
-        props.cover
-          ? `url('https://image.tmdb.org/t/p/w500/${props.cover}')`
-          : `url(${placeholder})`};
-
-      background-size: cover;
-      width: 160px;
-      height: 240px;
-      display: block;
-      border-radius: 4px;
-      border: 1px solid rgba(43, 134, 197);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      position: absolute;
-      top: -140px;
-      left: 400px;
-      z-index: 1;
-    }
+  &:hover img {
+    box-shadow: rgba(255, 255, 255, 0.25) 0px 54px 55px,
+      rgba(255, 255, 255, 0.12) 0px -12px 30px,
+      rgba(255, 255, 255, 0.12) 0px 4px 6px,
+      rgba(255, 255, 255, 0.17) 0px 12px 13px,
+      rgba(255, 255, 255, 0.09) 0px -3px 5px;
   }
 `;
 
-export const LogoIcon = styled(FaFilm)`
-  width: 20px;
-  height: 20px;
-  position: relative;
-  right: 6px;
-  top: 5px;
-  z-index: 1;
-  opacity: 0.7;
+export const Img = styled.img`
+  width: 250px;
+  height: 375px;
+  border-radius: 10px;
+  margin-bottom: 10px;
 `;
 
-LinkDetails.propTypes = {
-  cover: propTypes.string,
-  placeholder: propTypes.string,
-};
+export const Name = styled.h3`
+  color: white;
+  text-align: center;
+  font-weight: 300;
+  font-size: 22px;
+  text-shadow: 5px 3px 3px #000000;
+`;
