@@ -9,14 +9,14 @@ const SearchForm = ({ onSearchMovies }) => {
     setSearch(value);
   };
 
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-  //   onSearchMovies(search);
-  // };
-  const handleSubmit= value => {
-    setSearchParams({ query: value });
-  };
+  const handleSubmit = e => {
+    e.preventDefault();
+    onSearchMovies(search);
 
+  };
+  // const handleSubmit= value => {
+  //   setSearchParams({ query: value });
+  // };
 
 
   return (
